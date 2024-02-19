@@ -6,13 +6,10 @@ const crypto = require('crypto');
 const cors = require('cors');
 require('dotenv').config();
 
-
-
 const app = express();
-
 const path = require('path');
 
-// First, use express.static middleware to serve static files from 'public' directory
+// express.static middleware to serve static files from 'public' directory
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
@@ -27,7 +24,6 @@ app.use(session({
   cookie: { secure: 'auto', httpOnly: true } // Set to true if using https
 }));
 
-
 // PostgreSQL connection settings
 const pool = new Pool({
     user: process.env.DB_USER,
@@ -37,40 +33,35 @@ const pool = new Pool({
     port: process.env.DB_PORT
   });
   
+// ENDPOINT INSERT TEMPERATURE TO DATABASE
+app.post('/temperature_endpoint', async (req, res) => {
+  try {
+    const encryptedTemperature = req.body.data;
   
+    console.log("Received encrypted temperature:", encryptedTemperature);
   
-  app.post('/temperature_endpoint', async (req, res) => {
-    try {
-      const encryptedTemperature = req.body.data;
+    // Insert data into PostgreSQL
+    const query = 'INSERT INTO temperature_data (temperature) VALUES ($1)';
+    await pool.query(query, [encryptedTemperature]);
   
-      console.log("Received encrypted temperature:", encryptedTemperature);
-
-      // Optional: Decrypt the data here
-  
-      // Insert data into PostgreSQL
-      const query = 'INSERT INTO temperature_data (temperature) VALUES ($1)';
-      await pool.query(query, [encryptedTemperature]);
-  
-      res.send('Data received and stored.');
-    } catch (error) {
+    res.send('Data received and stored.');
+  } catch (error) {
       console.error('Database operation failed:', error);
       res.status(500).send('Server error');
     }
-  });
+});
 
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html')); // Send file HTML as response
 });
 
-
-
-// Login endpoint
+// ENDPOINT LOGIN
 app.post('/login', function(req, res) {
   // Extract username and password from req.body
   const { username, password } = req.body;
   
-  // Validate credentials...
-  if (username === 'valya.sandria' && password === 'esp32oke') {
+  // validasi kredensial
+  if (username === process.env.USERNAME && password === process.env.PASSWORD) {
       req.session.user = { username: username };
       res.json({ success: true });
   } else {
@@ -78,8 +69,7 @@ app.post('/login', function(req, res) {
   }
 });
 
-
-// Logout endpoint
+// ENDPOINT LOGOUT
 app.get('/logout', (req, res) => {
     req.session.destroy(err => {
         if (err) {
@@ -122,15 +112,15 @@ app.get('/login', checkNotAuthenticated, (req, res) => {
 
 // Function to decrypt data
 function decrypt(encryptedData) {
-  // Konversi hex string dari .env ke Buffer
-// Membuat kunci dan IV untuk AES-128-CBC
+  // Key dan IV harus sama dengan yang di ESP32
   const key = Buffer.from(process.env.ENCRYPTION_KEY, 'hex');
   const iv = Buffer.from(process.env.IV, 'hex');
 
+  // Konversi hex string dari data suhu di database ke Buffer
   const encrypted = Buffer.from(encryptedData, 'hex');
   console.log('encrypted : ', encryptedData)
   try{
-    //inisialisasi dechipher
+    // Inisialisasi dechipher
     const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
     decipher.setAutoPadding(true); // Aktifkan auto-padding untuk menghandle PKCS#7 padding
     let decrypted = decipher.update(encrypted, null, 'utf8');
@@ -141,11 +131,11 @@ function decrypt(encryptedData) {
 
   } catch (error) {
     console.error('Decrypt Error:', error.message);
-    return null; // Atau handle error sesuai kebutuhan
+    return null;
   }
 }
 
-// Endpoint to get the latest temperature
+// ENDPOINT RETRIEVE LATEST DATA FROM DB
 app.get('/getDecryptedData', async (req, res) => {
   try {
     const result = await pool.query('SELECT temperature FROM temperature_data ORDER BY id DESC LIMIT 1');
@@ -166,6 +156,8 @@ app.get('/getDecryptedData', async (req, res) => {
   }
 });
 
+//======================== TESTING =========================
+// Fungsi untuk enkripsi data
 function encrypt(data) {
   const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
   let encrypted = cipher.update(data, 'utf8', 'hex');
@@ -173,7 +165,7 @@ function encrypt(data) {
   return encrypted;
 }
 
-//======================== TESTING =========================
+
 // Endpoint untuk enkripsi data
 app.post('/encryptData', (req, res) => {
   const { data } = req.body;
@@ -195,5 +187,7 @@ app.post('/decryptData', (req, res) => {
     res.status(400).send('No encrypted data provided');
   }
 });
+
+// KONFIGURASI PORT
 const PORT = 5000;
 app.listen(PORT, () => console.log(`Server running on http://localhost:${PORT}`));
