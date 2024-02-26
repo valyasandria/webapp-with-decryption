@@ -1,10 +1,6 @@
 pipeline {
     agent any
 
-    environment {
-        // Definisikan environment variables jika diperlukan
-    }
-
     stages {
         stage('Checkout') {
             steps {
@@ -63,13 +59,13 @@ pipeline {
                     dir('arduino') {
                         // Ganti dengan perintah untuk tool scan kode Anda, misalnya SonarQube, atau alat lain
                         sh 'echo "Scanning Arduino code..."'
-                        // Contoh: sh 'sonar-scanner -Dsonar.projectKey=YourProjectKey'
+                        sh 'sonar-scanner -Dsonar.projectKey=YourProjectKey'
                     }
                     // Scan HTML code
                     dir('webapp') {
                         // Ganti dengan perintah untuk tool scan kode HTML Anda
                         sh 'echo "Scanning HTML code..."'
-                        // Contoh: sh 'sonar-scanner -Dsonar.projectKey=YourProjectKey'
+                        sh 'sonar-scanner -Dsonar.projectKey=YourProjectKey'
                     }
                 }
             }
