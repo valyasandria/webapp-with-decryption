@@ -1,4 +1,6 @@
-// custom allert
+// backend 
+
+// custom allert in login page
 document.addEventListener('DOMContentLoaded', function() {
     const loginButton = document.getElementById('loginButton');
     const username = document.getElementById('username');
@@ -19,11 +21,11 @@ document.addEventListener('DOMContentLoaded', function() {
         customAlert.style.display = 'none';
     });
 
-//LOGIN
+//LOGIN 
 loginButton.addEventListener('click', function(event) {
     event.preventDefault(); // Prevent default form submission behavior
     if (username.value && password.value) {
-            // Send POST request to server
+        // Send POST request to server
         fetch('/login', {
             method: 'POST',
             headers: {
@@ -53,8 +55,7 @@ loginButton.addEventListener('click', function(event) {
     });
 });
 
-//revisi https://chat.openai.com/share/237d163d-e4d3-41b5-ad62-061250b52937
-
+//HOME
 document.addEventListener('DOMContentLoaded', function() {
     const suhuElement = document.getElementById('suhu-value');
     const kipasElement = document.getElementById('kipas-status');
@@ -74,9 +75,10 @@ document.addEventListener('DOMContentLoaded', function() {
             })
     }
 
-    setInterval(updateSuhuDanKipas, 60000); // Perbarui suhu dan status kipas setiap 2 detik
+    setInterval(updateSuhuDanKipas, 60000); // Perbarui suhu dan status kipas setiap 60 detik
 });
 
+//LOGOUT
 document.addEventListener('DOMContentLoaded', function() {
     const logoutButton = document.getElementById('logoutButton');
 
