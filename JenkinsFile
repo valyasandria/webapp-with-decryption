@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Mengkloning repositori aplikasi web
-                git credentialsId: 'admin', url: 'https://github.com/valyasandria/webapp-with-decryption.git'
+                git credentialsId: '7a4de20d-81ad-4f81-a150-ca106be9d7dd', url: 'https://github.com/valyasandria/webapp-with-decryption.git'
             }
         }
         
@@ -59,13 +59,13 @@ pipeline {
                     dir('arduino') {
                         // Ganti dengan perintah untuk tool scan kode Anda, misalnya SonarQube, atau alat lain
                         sh 'echo "Scanning Arduino code..."'
-                        sh 'sonar-scanner -Dsonar.projectKey=YourProjectKey'
+                        sh 'sonar-scanner -Dsonar.projectKey=iot-with-encryption'
                     }
                     // Scan HTML code
                     dir('webapp') {
                         // Ganti dengan perintah untuk tool scan kode HTML Anda
                         sh 'echo "Scanning HTML code..."'
-                        sh 'sonar-scanner -Dsonar.projectKey=YourProjectKey'
+                        sh 'sonar-scanner -Dsonar.projectKey=iot-with-encryption'
                     }
                 }
             }
