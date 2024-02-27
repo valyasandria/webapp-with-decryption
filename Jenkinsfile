@@ -36,7 +36,7 @@ pipeline {
                     // Ganti direktori sesuai dengan lokasi file .ino Anda
                     dir('arduino') {
                         // Ubah 'your_board_name' dengan nama board Arduino yang sesuai
-                        sh 'arduino-cli compile --fqbn esp32:esp32:esp32 trail-dht11.ino'
+                        sh 'arduino-cli compile --fqbn esp32:esp32:esp32 trial-dht11.ino'
                     }
                 }
             }
