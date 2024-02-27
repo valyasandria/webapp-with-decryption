@@ -5,7 +5,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 // Mengkloning repositori aplikasi web
-                git tool: 'Default', git credentialsId: '7a4de20d-81ad-4f81-a150-ca106be9d7dd', url: 'https://github.com/valyasandria/webapp-with-decryption.git', branch: 'main'
+                git credentialsId: '7a4de20d-81ad-4f81-a150-ca106be9d7dd', url: 'https://github.com/valyasandria/webapp-with-decryption.git', branch: 'main'
             }
         }
         
@@ -25,7 +25,7 @@ pipeline {
                 script {
                     // Mengkloning repositori Arduino ke direktori 'arduino'
                     dir('arduino') {
-                        git tool: 'Default', git credentialsId: '7a4de20d-81ad-4f81-a150-ca106be9d7dd', url: 'https://github.com/valyasandria/esp32-with-encryption.git',  branch: 'main'
+                        git credentialsId: '7a4de20d-81ad-4f81-a150-ca106be9d7dd', url: 'https://github.com/valyasandria/esp32-with-encryption.git',  branch: 'main'
                     }
                 }
             }
