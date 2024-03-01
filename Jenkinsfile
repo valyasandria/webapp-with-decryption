@@ -1,14 +1,11 @@
 pipeline {
     agent any
-    tools {
-        // Pastikan nama ini sesuai dengan konfigurasi SonarQube Scanner yang Anda buat
-        sonarQube 'sast-aes-128'
-    }
+    
     environment {
         // Definisikan variabel environment untuk SonarQube
         SONAR_PROJECT_KEY = "iot-with-encryption"
         SONAR_HOST_URL = "http://192.168.31.63:9000"
-        SONAR_AUTH_TOKEN = "sqa_61313a2e8c8af50056e21a7e4365be76ea529fbc"
+        SONAR_AUTH_TOKEN = "sqp_bd4f187216bf71db1be65ae47a7345d7d308f36d"
     }
     stages {
         stage('Checkout Web App') {
