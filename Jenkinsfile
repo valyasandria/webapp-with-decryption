@@ -8,13 +8,6 @@ pipeline {
         SONAR_AUTH_TOKEN = "sqp_bd4f187216bf71db1be65ae47a7345d7d308f36d"
     }
     stages {
-        stage('Checkout Web App') {
-            steps {
-                // Mengkloning repositori aplikasi web
-                bat 'git clone https://github.com/valyasandria/webapp-with-decryption.git'
-            }
-        }
-        
         stage('Build Web App') {
             steps {
                 script {
