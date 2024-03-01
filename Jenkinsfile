@@ -18,18 +18,7 @@ pipeline {
                 }
             }
         }
-
-        stage('Checkout Arduino') {
-            steps {
-                script {
-                    // Mengkloning repositori Arduino ke direktori 'arduino'
-                    dir('arduino') {
-                        bat 'git clone https://github.com/valyasandria/esp32-with-encryption.git'
-                    }
-                }
-            }
-        }
-        
+                
         stage('Compile Arduino Code') {
             steps {
                 script {
