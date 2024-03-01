@@ -1,6 +1,6 @@
 pipeline {
     agent any
-    
+
     environment {
         // Definisikan variabel environment untuk SonarQube
         SONAR_PROJECT_KEY = "iot-with-encryption"
@@ -11,7 +11,7 @@ pipeline {
         stage('Checkout Web App') {
             steps {
                 // Mengkloning repositori aplikasi web
-                git credentialsId: '7a4de20d-81ad-4f81-a150-ca106be9d7dd', url: 'https://github.com/valyasandria/webapp-with-decryption.git', branch: 'main'
+                bat 'git clone https://github.com/valyasandria/webapp-with-decryption.git'
             }
         }
         
@@ -19,8 +19,8 @@ pipeline {
             steps {
                 script {
                     // Install dependencies dan build
-                    sh 'npm install'
-                    sh 'npm run test'
+                    powershell 'npm install'
+                    powershell 'npm run test'
                 }
             }
         }
@@ -30,7 +30,7 @@ pipeline {
                 script {
                     // Mengkloning repositori Arduino ke direktori 'arduino'
                     dir('arduino') {
-                        git credentialsId: '7a4de20d-81ad-4f81-a150-ca106be9d7dd', url: 'https://github.com/valyasandria/esp32-with-encryption.git',  branch: 'main'
+                        bat 'git clone https://github.com/valyasandria/esp32-with-encryption.git'
                     }
                 }
             }
@@ -42,7 +42,7 @@ pipeline {
                     // Ganti direktori sesuai dengan lokasi file .ino Anda
                     dir('arduino') {
                         // Compile kode Arduino
-                        sh 'arduino-cli compile --fqbn esp32:esp32:esp32 trial-dht11.ino'
+                        powershell 'arduino-cli compile --fqbn esp32:esp32:esp32 trial-dht11.ino'
                     }
                 }
             }
@@ -63,10 +63,10 @@ pipeline {
                     // Melakukan analisis SonarQube untuk keseluruhan projek
                     withSonarQubeEnv('sast-aes-128') {
                         // Analisis untuk Web App
-                        sh "sonar-scanner -Dsonar.projectKey=${env.SONAR_PROJECT_KEY}_web -Dsonar.sources=. -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+                        powershell "sonar-scanner -Dsonar.projectKey=${env.SONAR_PROJECT_KEY}_web -Dsonar.sources=. -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
                         // Analisis untuk Arduino code
                         dir('arduino') {
-                            sh "sonar-scanner -Dsonar.projectKey=${env.SONAR_PROJECT_KEY}_arduino -Dsonar.sources=. -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
+                            powershell "sonar-scanner -Dsonar.projectKey=${env.SONAR_PROJECT_KEY}_arduino -Dsonar.sources=. -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}"
                         }
                     }
                 }
