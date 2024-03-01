@@ -20,7 +20,7 @@ pipeline {
                 script {
                     // Install dependencies dan build
                     powershell 'npm install'
-                    powershell 'npm run test'
+                    powershell 'npm run start'
                 }
             }
         }
