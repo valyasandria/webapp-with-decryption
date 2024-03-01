@@ -13,12 +13,11 @@ pipeline {
                 script {
                     // Install dependencies dan build
                     powershell 'npm install'
-                    //powershell 'npm run start'
                     echo 'source code web app compiled'
                 }
             }
         }
-                
+
         stage('Compile Arduino Code') {
             steps {
                 script {
@@ -36,7 +35,8 @@ pipeline {
             steps {
                 script {
                     // Langkah ini bisa disesuaikan sesuai kebutuhan
-                    echo 'Assuming HTML & CSS do not require compilation'
+                    powershell 'npm run start'
+                    echo 'web app is up!'
                 }
             }
         }
