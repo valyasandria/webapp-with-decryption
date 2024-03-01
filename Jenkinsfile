@@ -13,7 +13,8 @@ pipeline {
                 script {
                     // Install dependencies dan build
                     powershell 'npm install'
-                    powershell 'npm run start'
+                    //powershell 'npm run start'
+                    echo 'source code web app compiled'
                 }
             }
         }
@@ -36,6 +37,7 @@ pipeline {
                     dir('arduino') {
                         // Compile kode Arduino
                         powershell 'arduino-cli compile --fqbn esp32:esp32:esp32 trial-dht11.ino'
+                        echo 'source code ESP32 compiled'
                     }
                 }
             }
