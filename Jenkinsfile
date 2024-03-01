@@ -24,7 +24,7 @@ pipeline {
                     // Ganti direktori sesuai dengan lokasi file .ino Anda
                     dir('arduino') {
                         // Compile kode Arduino
-                        powershell 'C:\\Program Files\\arduino-cli_0.35.3_Windows_64bit compile --fqbn esp32:esp32:esp32 trial-dht11.ino'
+                        powershell 'C:\\Program Files\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe compile --fqbn esp32:esp32:esp32 trial-dht11.ino'
                         echo 'source code ESP32 compiled'
                     }
                 }
