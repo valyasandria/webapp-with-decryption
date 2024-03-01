@@ -24,7 +24,7 @@ pipeline {
                     // Ganti direktori sesuai dengan lokasi file .ino Anda
                     dir('esp32') {
                         // Compile kode Arduino
-                        bat '"C:\\Program Files\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" compile --fqbn esp32:esp32:esp32 C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\esp32\\esp32-with-encryption\\esp32-with-encryption.ino'
+                        bat '"C:\\Program Files\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" compile --fqbn esp32:esp32::esp32doit-devkit-v1 C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\esp32\\esp32-with-encryption'
                         echo 'source code ESP32 compiled'
                     }
                 }
