@@ -17,14 +17,24 @@ pipeline {
                 }
             }
         }
+        stage('Checkout Arduino') {
+            steps {
+                script {
+                    // Mengkloning repositori Arduino ke direktori 'arduino'
+                    dir('esp32') {
+                        bat 'git clone https://github.com/valyasandria/esp32-with-encryption.git'
+                    }
+                }
+            }
+        }
 
         stage('Compile Arduino Code') {
             steps {
                 script {
                     // Ganti direktori sesuai dengan lokasi file .ino Anda
-                    dir('arduino') {
+                    dir('esp32') {
                         // Compile kode Arduino
-                        bat '"C:\\Program Files\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" compile --fqbn esp32:esp32:esp32 C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\arduino\\esp32-with-encryption\\trial-dht11.ino'
+                        bat '"C:\\Program Files\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" compile --fqbn esp32:esp32:esp32 C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\esp32\\esp32-with-encryption\\esp32-with-encryption.ino'
                         echo 'source code ESP32 compiled'
                     }
                 }
