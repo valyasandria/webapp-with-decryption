@@ -36,8 +36,8 @@ pipeline {
             steps {
                 script {
                     // Langkah ini bisa disesuaikan sesuai kebutuhan
-                    powershell 'npm run start'
-                    echo 'web app is up!'
+                    //powershell 'npm run start'
+                    echo 'web app is compiled!'
                 }
             }
         }
