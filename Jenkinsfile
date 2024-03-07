@@ -22,7 +22,6 @@ pipeline {
             steps {
                 script {
                     // Ganti direktori sesuai dengan lokasi file .ino Anda
-                    dir('esp32') {
                         // Compile kode Arduino
                         bat '"C:\\Users\\valya.sandria\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" core update-index'
                         bat '"C:\\Users\\valya.sandria\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" core install esp32:esp32'
