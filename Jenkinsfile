@@ -4,7 +4,7 @@ pipeline {
     environment {
         // Definisikan variabel environment untuk SonarQube
         SONAR_PROJECT_KEY = "iot-with-encryption"
-        SONAR_HOST_URL = "http://192.168.31.63:9000"
+        SONAR_HOST_URL = "http://localhost:9000"
         SONAR_AUTH_TOKEN = "sqp_bd4f187216bf71db1be65ae47a7345d7d308f36d"
     }
     stages {
@@ -48,10 +48,10 @@ pipeline {
                     // Melakukan analisis SonarQube untuk keseluruhan projek
                     withSonarQubeEnv('sast-aes-128') {
                         // Analisis untuk Web App
-                        bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.projectKey=${env.SONAR_PROJECT_KEY}_web -Dsonar.sources=webapp-with-decryption -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}'
+                        bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.sources=webapp-with-decryption -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}'
                         // Analisis untuk Arduino code
                         dir('esp32') {
-                            bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.projectKey=${env.SONAR_PROJECT_KEY}_arduino -Dsonar.sources=esp32-with-encryption/esp32-with-encryption.ino -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}'
+                            bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.sources=esp32-with-encryption/esp32-with-encryption.ino -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_AUTH_TOKEN}'
                         }
                         echo 'akses hasil scan sonarqube di sini: http://localhost:9000/dashboard?id=iot-with-encryption'
                     }
