@@ -5,7 +5,7 @@ pipeline {
         // Definisikan variabel environment untuk SonarQube
         SONAR_PROJECT_KEY = "iot-with-encryption"
         SONAR_HOST_URL = "http://localhost:9000"
-        SONAR_AUTH_TOKEN = "squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e"
+        SONAR_TOKEN = "squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e"
     }
     stages {
         stage('Build Web App') {
@@ -48,12 +48,12 @@ pipeline {
                     // Melakukan analisis SonarQube untuk keseluruhan projek
                     withSonarQubeEnv('sast-aes-128') {
                         // Analisis untuk Web App
-                        bat 'set SONAR_TOKEN=squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e'
-                        bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.sources=webapp-with-decryption -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=%SONAR_TOKEN%'
+                        //bat 'set SONAR_TOKEN=squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e'
+                        bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.sources=webapp-with-decryption -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_TOKEN}'
                         // Analisis untuk Arduino code
                         dir('esp32') {
-                            bat 'set SONAR_TOKEN=squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e'
-                            bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.sources=esp32-with-encryption/esp32-with-encryption.ino -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=%SONAR_TOKEN%'
+                            //bat 'set SONAR_TOKEN=squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e'
+                            bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.sources=esp32-with-encryption/esp32-with-encryption.ino -Dsonar.host.url=${env.SONAR_HOST_URL} -Dsonar.login=${env.SONAR_TOKEN}'
                         }
                         echo 'akses hasil scan sonarqube di sini: http://localhost:9000/dashboard?id=iot-with-encryption'
                     }
