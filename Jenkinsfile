@@ -27,7 +27,7 @@ pipeline {
                         //bat '"D:\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" core cache clean'
                         //bat '"D:\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" core uninstall esp32:esp32'
                         //bat '"D:\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli.exe" core install esp32:esp32'
-                        bat '"D:\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli" compile --fqbn esp32:esp32:esp32doit-devkit-v1 C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\esp32\\esp32-with-encryption\\esp32-with-encryption.ino'
+                        bat '"C:\\Users\\valya.sandria\\arduino-cli_0.35.3_Windows_64bit\\arduino-cli" compile --fqbn esp32:esp32:esp32doit-devkit-v1 C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\esp32\\esp32-with-encryption\\esp32-with-encryption.ino'
                         echo 'source code ESP32 compiled'
                     }
                 }
