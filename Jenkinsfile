@@ -5,7 +5,7 @@ pipeline {
         // Definisikan variabel environment untuk SonarQube
         SONAR_PROJECT_KEY = "iot-with-encryption"
         SONAR_HOST_URL = "http://localhost:9000"
-        SONAR_TOKEN = "squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e"
+        SONAR_TOKEN = "sqp_d18825a5328af9d4bee96f8634d390bdbd5ffc0c"
     }
     stages {
         stage('Build Web App') {
