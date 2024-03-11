@@ -47,11 +47,13 @@ pipeline {
                 script {
                     // Melakukan analisis SonarQube untuk keseluruhan projek
                     withSonarQubeEnv('sast-aes-128') {
+                        bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.scm.exclusions.disabled=true'
                         // Analisis untuk Web App
                         //bat 'set SONAR_TOKEN=squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e'
                         bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.sources=C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\webapp-with-decryption\\public -Dsonar.host.url=${env.SONAR_HOST_URL}'
                         // Analisis untuk Arduino code
                         dir('esp32') {
+                            bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.scm.exclusions.disabled=true'
                             //bat 'set SONAR_TOKEN=squ_04ccd007dec81c8ffb022b34857c2d8c9d00612e'
                             bat '"C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat" -Dsonar.login=${env.SONAR_TOKEN} -Dsonar.projectKey=${env.SONAR_PROJECT_KEY} -Dsonar.sources=C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\esp32\\esp32-with-encryption -Dsonar.host.url=${env.SONAR_HOST_URL}'
                         }
