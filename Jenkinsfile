@@ -57,8 +57,8 @@ pipeline {
         stage('SQL Injection Analysis') {
             steps {
                 script {
-                    // Melakukan analisis SonarQube untuk keseluruhan projek
-                    bat '"C:\\Users\\valya.sandria\\AppData\\Roaming\\Python\\Python39\\Scripts\\ipython3.exe" "C:\\Users\\valya.sandria\\sqlmap\\sqlmap.py" -u http://localhost:5000/home.html -dbs -level=5 --risk=3'
+                    // Melakukan analisis SQL injection dengan SQL map
+                    bat '"C:\\Users\\valya.sandria\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" "C:\\Users\\valya.sandria\\sqlmap\\sqlmap.py" -u http://localhost:5000/home.html -dbs -level=5 --risk=3'
                 }
             }
         }
