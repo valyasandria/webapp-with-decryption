@@ -58,7 +58,7 @@ pipeline {
             steps {
                 script {
                     // Melakukan analisis SonarQube untuk keseluruhan projek
-                    bat '"C:\\Users\\valya.sandria\\sqlmap\\sqlmap.py" -u http://localhost:5000/home.html -dbs -level=5 --risk=3'
+                    bat '"C:\\Users\\valya.sandria\\AppData\\Roaming\\Python\\Python39\\Scripts" "C:\\Users\\valya.sandria\\sqlmap\\sqlmap.py" -u http://localhost:5000/home.html -dbs -level=5 --risk=3'
                 }
             }
         }
