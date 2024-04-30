@@ -73,8 +73,8 @@ pipeline {
             steps {
                 script {
                     // Melakukan analisis SQL injection dengan SQL map
-                    bat '"C:\\Users\\valya.sandria\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" 
-                    "C:\\Users\\valya.sandria\\sqlmap\\sqlmap.py" -u http://localhost:5000/home.html -dbs -level=5 --risk=3'
+                    bat '''"C:\\Users\\valya.sandria\\AppData\\Local\\Programs\\Python\\Python311\\python.exe" 
+                    "C:\\Users\\valya.sandria\\sqlmap\\sqlmap.py" -u http://localhost:5000/home.html -dbs -level=5 --risk=3'''
                 }
             }
         }
