@@ -167,8 +167,6 @@ app.get('/getDecryptedData', async (req, res) => {
 
       // Mengirimkan respons dengan data yang telah didekripsi
       res.json({ decryptedData: decryptedData }); 
-      //res.json({ encryptedData: encryptedData}); //fixing packet sniffing
-      //const finalData = decryptedData;
     } else {
       // Mengirimkan respons jikpa tidak ada data yang ditemukan
       res.status(404).send('No temperature data found');
@@ -182,40 +180,6 @@ app.get('/getDecryptedData', async (req, res) => {
     res.status(500).send('Server error');
   }
 });
-
-/*
-//======================== TESTING =========================
-// Fungsi untuk enkripsi data
-function encrypt(data) {
-  const cipher = crypto.createCipheriv('aes-128-cbc', key, iv);
-  let encrypted = cipher.update(data, 'utf8', 'hex');
-  encrypted += cipher.final('hex');
-  return encrypted;
-}
-
-
-// Endpoint untuk enkripsi data
-app.post('/encryptData', (req, res) => {
-  const { data } = req.body;
-  if (data) {
-    const encryptedData = encrypt(data);
-    res.json({ encryptedData });
-  } else {
-    res.status(400).send('No data provided');
-  }
-});
-// Endpoint untuk mendekripsi data
-app.post('/decryptData', (req, res) => {
-  const { encryptedData } = req.body;
-  if (encryptedData) {
-    const decryptedData = decrypt(encryptedData);
-    res.json({ decryptedData });
-  } else {
-    res.status(400).send('No encrypted data provided');
-  }
-});
-*/
-
 
 // KONFIGURASI PORT
 const PORT = 5000;

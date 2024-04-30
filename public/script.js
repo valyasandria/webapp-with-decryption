@@ -66,10 +66,6 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(response => response.json())
             .then(data=>{
                 const suhu = data.decryptedData
-                // Dekode data Base85 ke format asli
-                //const suhu_base85 = data.decryptedData;
-                //const suhu = decodeBase85(suhu_base85);
-                //const suhu = atob(data.decryptedData)
                 suhuElement.textContent = `${parseFloat(suhu).toFixed(2)}°C`;
                 // Mengubah kondisi kipas berdasarkan suhu
                 if (suhu >= 30) {
