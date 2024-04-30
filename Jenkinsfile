@@ -7,6 +7,7 @@ pipeline {
         SONAR_HOST_URL = "http://localhost:9000"
         SONAR_TOKEN = "sqp_d18825a5328af9d4bee96f8634d390bdbd5ffc0c"
     }
+    // stages build
     stages {
         stage('Build Web App') {
             steps {
