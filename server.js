@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const { Pool } = require('pg');
 const crypto = require('crypto');
 const cors = require('cors');
+const Ascii85 = require('ascii85');
 require('dotenv').config();
 
 const app = express();
@@ -56,16 +57,31 @@ app.get('/', (req, res) => {
 });
 
 // ENDPOINT LOGIN
-app.post('/login', function(req, res) {
-  // Extract username and password from req.body
+app.post('/login', async function(req, res) {
+  // Ekstrak username dan password dari req.body
   const { username, password } = req.body;
   
-  // validasi kredensial
-  if (username === process.env.USERNAME && password === process.env.PASSWORD) {
-      req.session.user = { username: username };
-      res.json({ success: true });
-  } else {
+  try {
+    // Query untuk mencari user dengan username yang diberikan
+    const queryResult = await pool.query('SELECT * FROM users WHERE username = $1', [username]);
+
+    if (queryResult.rows.length > 0) {
+      const user = queryResult.rows[0];
+
+      // Periksa jika password yang diberikan sesuai dengan yang ada di database
+      if (password === user.password) {
+        req.session.user = { username: user.username };
+        res.json({ success: true });
+      } else {
+        res.json({ success: false, message: 'Incorrect username or password' });
+      }
+    } else {
+      //username not found
       res.json({ success: false, message: 'Incorrect username or password' });
+    }
+  } catch (error) {
+    console.error('Database error:', error);
+    res.status(500).json({ success: false, message: 'Internal server error' });
   }
 });
 
@@ -118,7 +134,7 @@ function decrypt(encryptedData) {
 
   // Konversi hex string dari data suhu di database ke Buffer
   const encrypted = Buffer.from(encryptedData, 'hex');
-  console.log('encrypted : ', encryptedData)
+  console.log('encrypted: ', encryptedData)
   try{
     // Inisialisasi dechipher
     const decipher = crypto.createDecipheriv('aes-128-cbc', key, iv);
@@ -126,7 +142,7 @@ function decrypt(encryptedData) {
     let decrypted = decipher.update(encrypted, null, 'utf8');
     decrypted += decipher.final('utf8');
 
-    console.log('decryted: ', decrypted)
+    console.log('decrypted: ', decrypted)
     return decrypted;
 
   } catch (error) {
@@ -137,25 +153,37 @@ function decrypt(encryptedData) {
 
 // ENDPOINT RETRIEVE LATEST DATA FROM DB
 app.get('/getDecryptedData', async (req, res) => {
+  let start = performance.now();
   try {
     const result = await pool.query('SELECT temperature FROM temperature_data ORDER BY id DESC LIMIT 1');
     if (result.rows.length > 0) {
       // Mendekripsi data temperature
       const encryptedData = result.rows[0].temperature;
       console.log('fetched: ', encryptedData)
-      const decryptedData = decrypt(encryptedData);
+      const decryptedData = decrypt(encryptedData)
+
+      // Ubah data yang didekripsi menjadi Base85 (Ascii85)
+      const base85Data = Ascii85.encode(decryptedData).toString();
+
       // Mengirimkan respons dengan data yang telah didekripsi
-      res.json({ decryptedData: decryptedData });
+      res.json({ decryptedData: decryptedData }); 
+      //res.json({ encryptedData: encryptedData}); //fixing packet sniffing
+      //const finalData = decryptedData;
     } else {
       // Mengirimkan respons jikpa tidak ada data yang ditemukan
       res.status(404).send('No temperature data found');
     }
+    // Waktu akhir setelah data berhasil ditampilkan
+    let end = performance.now();
+    let time = end - start; // Durasi eksekusi dalam ms
+    console.log(`running time: ${time} milisekon`);                                             
   } catch (error) {
     console.error('Error:', error);
     res.status(500).send('Server error');
   }
 });
 
+/*
 //======================== TESTING =========================
 // Fungsi untuk enkripsi data
 function encrypt(data) {
@@ -176,7 +204,6 @@ app.post('/encryptData', (req, res) => {
     res.status(400).send('No data provided');
   }
 });
-
 // Endpoint untuk mendekripsi data
 app.post('/decryptData', (req, res) => {
   const { encryptedData } = req.body;
@@ -187,6 +214,8 @@ app.post('/decryptData', (req, res) => {
     res.status(400).send('No encrypted data provided');
   }
 });
+*/
+
 
 // KONFIGURASI PORT
 const PORT = 5000;

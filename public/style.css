@@ -1,5 +1,6 @@
 body {
     font-family: Arial, sans-serif;
+    background: linear-gradient(to right, #7077A1, #F6B17A);
     background-color: #f4f4f4;
     margin: 0;
     padding: 0;
@@ -7,7 +8,6 @@ body {
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background: linear-gradient(to right, #7077A1, #F6B17A);
 }
 
 body, html {
@@ -132,7 +132,6 @@ button:hover {
     padding: 20px;
     border-radius: 10px;
     flex: 1; /* Membuat kedua blok memiliki ukuran yang sama */
-    margin: 15px; /* Memberi jarak antar blok */
     text-align: center; /* Menengahkan konten di dalam blok */
 }
 
