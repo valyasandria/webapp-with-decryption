@@ -8,7 +8,9 @@ pipeline {
         SONAR_TOKEN = "sqp_d18825a5328af9d4bee96f8634d390bdbd5ffc0c"
     }
 
-    stage('Checkout Repositories') {
+    // stages build
+    stages {
+        stage('Checkout Repositories') {
             steps {
                 // Checkout repository pertama
                 dir('esp32-with-encryption') {
@@ -23,8 +25,6 @@ pipeline {
                 }
             }
         }
-    // stages build
-    stages {
         stage('Build Web App') {
             steps {
                 script {
