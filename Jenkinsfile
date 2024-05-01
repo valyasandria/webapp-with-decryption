@@ -68,14 +68,7 @@ pipeline {
                 script {
                     // Melakukan analisis SonarQube untuk keseluruhan projek
                     withSonarQubeEnv('sast-aes-128') {
-                        
-                        bat """'C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat 
-                        -Dsonar.login=sqp_d18825a5328af9d4bee96f8634d390bdbd5ffc0c 
-                        -Dsonar.scm.exclusions.disabled=true 
-                        -Dsonar.projectKey=iot-with-encryption 
-                        -Dsonar.sources=C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\webapp-with-decryption 
-                        -Dsonar.host.url=http://localhost:9000'"""
-                        
+                        bat 'C:\\Users\\valya.sandria\\sonarscanner\\bin\\sonar-scanner.bat -Dsonar.login=sqp_d18825a5328af9d4bee96f8634d390bdbd5ffc0c -Dsonar.scm.exclusions.disabled=true -Dsonar.projectKey=iot-with-encryption -Dsonar.sources=C:\\ProgramData\\Jenkins\\.jenkins\\workspace\\Testing-IoT-Pipeline\\webapp-with-decryption -Dsonar.host.url=http://localhost:9000'
                         echo 'scan completed. akses hasil scan sonarqube di sini: http://localhost:9000/dashboard?id=iot-with-encryption'
                     }
                 }
