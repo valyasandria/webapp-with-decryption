@@ -7,6 +7,22 @@ pipeline {
         SONAR_HOST_URL = "http://localhost:9000"
         SONAR_TOKEN = "sqp_d18825a5328af9d4bee96f8634d390bdbd5ffc0c"
     }
+
+    stage('Checkout Repositories') {
+            steps {
+                // Checkout repository pertama
+                dir('esp32-with-encryption') {
+                    git branch: 'main',
+                        url: 'https://github.com/valyasandria/esp32-with-encryption.git'
+                }
+                
+                // Checkout repository kedua
+                dir('webapp-with-decryption') {
+                    git branch: 'main',
+                        url: 'https://github.com/valyasandria/webapp-with-decryption.git'
+                }
+            }
+        }
     // stages build
     stages {
         stage('Build Web App') {
